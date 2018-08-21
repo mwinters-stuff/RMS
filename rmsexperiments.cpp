@@ -1,12 +1,12 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <list>
-#include <cmath>
 #include <chrono>
+#include <cmath>
+#include <fstream>
+#include <iostream>
+#include <list>
+#include <string>
 #include <thread>
 
-typedef std::pair<uint32_t, uint16_t> _adcreading;
+using _adcreading = std::pair<uint32_t, uint16_t>;
 std::list<_adcreading> adcreadings;
 std::list<_adcreading>::iterator iter_readings;
 
@@ -39,9 +39,6 @@ uint16_t inputPinReaderDelayed()
   previous_reading = reading;
   return reading.second;
 }
-
-#define ADC_BITS 11
-#define ADC_COUNTS (1 << ADC_BITS)
 
 uint32_t calcRMS(uint16_t offsetI, float adjustment, uint16_t _crossings)
 {
@@ -154,9 +151,9 @@ void testIntegerVolts()
   std::cout << "Integer Volts Took Time " << diff.count() << " AVERAGE " << ((sum / ctr) / 100.0) << std::endl;
 }
 
-void doIRMS(std::string filename)
+void doIRMS(const std::string& filename)
 {
-  std::ifstream ifs(filename);
+  std::ifstream ifs(filename, std::ios_base::in);
   if (!ifs.is_open())
   {
     std::cout << "failed to open " << filename << '\n';
@@ -169,7 +166,7 @@ void doIRMS(std::string filename)
     {
       ifs >> time >> adcv;
       time[time.length() - 1] = '\0';
-      adcreadings.push_back(_adcreading(std::stoul(time), adcv));
+      adcreadings.emplace_back(std::stoul(time), adcv);
     }
     std::cout << "Readings " << adcreadings.size() << std::endl;
 
@@ -184,9 +181,9 @@ void doIRMS(std::string filename)
   std::cout.flush();
 }
 
-void doVOLTS(std::string filename)
+void doVOLTS(const std::string& filename)
 {
-  std::ifstream ifs(filename);
+  std::ifstream ifs(filename, std::ios_base::in);
   if (!ifs.is_open())
   {
     std::cout << "failed to open " << filename << '\n';
@@ -200,7 +197,7 @@ void doVOLTS(std::string filename)
     {
       ifs >> time >> adcv;
       time[time.length() - 1] = '\0';
-      adcreadings.push_back(_adcreading(std::stoul(time), adcv));
+      adcreadings.emplace_back(std::stoul(time), adcv);
     }
     std::cout << "Readings " << adcreadings.size() << std::endl;
 

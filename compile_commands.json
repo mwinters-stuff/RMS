@@ -1,0 +1,16 @@
+[
+    {
+        "arguments": [
+            "clang++", 
+            "-c", 
+            "-Wall", 
+            "-std=c++14", 
+            "-pedantic", 
+            "-o", 
+            "obj/debug/rmsexperiments.o", 
+            "rmsexperiments.cpp"
+        ], 
+        "directory": "/home/AP/mwinters/OwnStuff/RMS", 
+        "file": "rmsexperiments.cpp"
+    }
+]
